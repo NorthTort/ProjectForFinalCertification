@@ -64,4 +64,19 @@ public class AdminController {
         productServise.deleteProduct(id);
         return "redirect:/admin";
     }
+
+//    Метод по отображению формы редактирования product
+    @GetMapping("/product/edit/{id}") //Обрабатываем нажатие на ссылку редактировать товар
+    public String editProduct(@PathVariable("id") int id, Model model){ //Принимаем "id" и помещаем его в специальную переменную id
+//    Кладем в модель атрибут нашей страницы editProduct.html и продукт, который получили по id
+        model.addAttribute("editProduct", productServise.getProductId(id));
+        return "product/editProduct";
+    }
+
+//    Метод редактирования product
+    @PostMapping("/product/edit/{id}")
+    public String editProduct(@ModelAttribute("editProduct") Product product, @PathVariable("id") int id){
+        productServise.updateProduct(id, product);
+        return "redirect:/admin";
+    }
 }
