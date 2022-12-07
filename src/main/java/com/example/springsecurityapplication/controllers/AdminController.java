@@ -1,5 +1,6 @@
 package com.example.springsecurityapplication.controllers;
 
+import com.example.springsecurityapplication.models.Product;
 import com.example.springsecurityapplication.security.PersonDetails;
 import com.example.springsecurityapplication.servises.ProductServise;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,7 @@ public class AdminController {
         this.productServise = productServise;
     }
 
+//    Метод по отображению главной страницы администратора с выводом товаров
     @GetMapping()
     public String admin(Model model){
         //        Получем объект аутентификации, и с помощью SecurityContextHolder.getContext() обращаемся к контексту и вызываем на нем метод аутентификации
@@ -43,5 +45,9 @@ public class AdminController {
         return "admin/admin";
     }
 
-
+    @GetMapping("/product/add") //Обработали тот путь на который у нас ведет ссылка добавить товар
+    public String addProduct(Model model){
+        model.addAttribute("product", new Product()); //Положили в модель пустой объект товара, чтобы потом его привязать к форме
+        return "product/addProduct";
+    }
 }
