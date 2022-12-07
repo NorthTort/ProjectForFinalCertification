@@ -22,7 +22,6 @@ public class UserController {
             return "redirect:/admin";
         }
 
-
         return "user/index";
     }
 }
