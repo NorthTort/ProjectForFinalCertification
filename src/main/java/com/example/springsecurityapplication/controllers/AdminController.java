@@ -8,8 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/admin")
@@ -45,9 +44,24 @@ public class AdminController {
         return "admin/admin";
     }
 
+//    Метод по отображению формы добавления
     @GetMapping("/product/add") //Обработали тот путь на который у нас ведет ссылка добавить товар
     public String addProduct(Model model){
         model.addAttribute("product", new Product()); //Положили в модель пустой объект товара, чтобы потом его привязать к форме
         return "product/addProduct";
+    }
+
+//    Метод добавляет объект с формы в таблицу product
+    @PostMapping("/product/add")
+    public String addProduct(@ModelAttribute("product") Product product){
+        productServise.saveProduct(product);
+        return "redirect:/admin";
+    }
+
+//    Метод удаляет product
+    @GetMapping("/product/delete/{id}")
+    public String deleteProduct(@PathVariable("id") int id){
+        productServise.deleteProduct(id);
+        return "redirect:/admin";
     }
 }
