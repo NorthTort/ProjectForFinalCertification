@@ -40,10 +40,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
 //                Все страницы защищены аутентификацией
                         .authorizeRequests()
+
 //                Указываем, что страница /admin доступна всем пользователям с ролью ADMIN
-                .antMatchers("/admin").hasAnyRole("ADMIN")
+//                .antMatchers("/admin").hasAnyRole("ADMIN")
+
+
 //                        Указываем, что не атентифицированные пользователи могут заходить на страницу с формой и ошибкой
                         .antMatchers("/auth/login", "/error", "/auth/registration").permitAll()
+
 //                     Указываем что все остальные страницы доступны пользователям с ролями USER и ADMIN
                         .anyRequest().hasAnyRole("USER","ADMIN")
 
@@ -51,14 +55,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        Указываем какой url запрос будет отправляться при заходе на закрытые страницы
         .and()
         .formLogin().loginPage("/auth/login")
+
 //                Указываем на какой url будут уходить данные с формы. url задался по умолчанию, Spring Security будет ждать логин и пароль с формы и сверять из бд
                 .loginProcessingUrl("/process_login")
+
 //                Указываем куда отправлять пользователя после успешной аутентификации
 //                Второй аргумент это перенаправление на данную страницу в любом случае при успешной аутентификации
                 .defaultSuccessUrl("/index", true)
+
 //                Указываем, куда перенаправляется пользователь при неудачной атентификации
                 .failureUrl("/auth/login")
                 .and()
+
+//                Указываем, что при переходе на /logout будет очищена сессия пользователя и перенаправление на /auth/login
                 .logout().logoutUrl("/logout").logoutSuccessUrl("/auth/login");
 
 
