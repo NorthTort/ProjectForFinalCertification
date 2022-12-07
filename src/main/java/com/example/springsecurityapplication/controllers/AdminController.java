@@ -1,10 +1,12 @@
 package com.example.springsecurityapplication.controllers;
 
 import com.example.springsecurityapplication.security.PersonDetails;
-import org.springframework.security.access.prepost.PreAuthorize;
+import com.example.springsecurityapplication.servises.ProductServise;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -17,8 +19,14 @@ public class AdminController {
 //    Указали, что к данному методу имеет доступ только пользователь с ролью ADMIN
 //    @PreAuthorize("hasRole('ROLE_ADMIN')")
 
+    private final ProductServise productServise;
+    @Autowired
+    public AdminController(ProductServise productServise) {
+        this.productServise = productServise;
+    }
+
     @GetMapping()
-    public String admin(){
+    public String admin(Model model){
         //        Получем объект аутентификации, и с помощью SecurityContextHolder.getContext() обращаемся к контексту и вызываем на нем метод аутентификации
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -31,6 +39,9 @@ public class AdminController {
             return "redirect:/index";
         }
 
-            return "admin/admin";
+        model.addAttribute("products", productServise.getAllProduct());
+        return "admin/admin";
     }
+
+
 }
