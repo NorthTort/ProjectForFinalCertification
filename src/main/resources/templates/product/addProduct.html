@@ -6,7 +6,7 @@
 </head>
 <body>
   <h3>Добавление товара</h3>
-  <form th:method="post" th:action="@{/admin/product/add}" th:object="${product}">
+  <form th:method="post" th:action="@{/admin/product/add}" th:object="${product}" enctype="multipart/form-data">
     <label for="title">Введите наименование:</label>
     <input type="text" th:field="*{title}" placeholder="Наименование" id="title">
     <br>
@@ -21,6 +21,14 @@
     <br>
     <label for="seller">Введите продавца:</label>
     <textarea th:field="*{seller}" placeholder="Продавец" id="seller"></textarea>
+    <br>
+    <p style="color: red">Вы можете добавить до 5 фотографий. Товар не может быть без фото</p>
+    <input type="file" name="file_one">
+    <input type="file" name="file_two">
+    <input type="file" name="file_three">
+    <input type="file" name="file_four">
+    <input type="file" name="file_five">
+    <br>
     <br>
     <input type="submit" value="Добавить">
   </form>

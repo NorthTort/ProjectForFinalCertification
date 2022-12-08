@@ -4,6 +4,9 @@ import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -44,6 +47,17 @@ public class Product {
         this.seller = seller;
     }
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "product")
+    private List<Image> imageList = new ArrayList<>();
+
+    private LocalDateTime dateTimeOfCreate;
+
+    //Будет заполняться дата и время при создании объекта класса
+    @PrePersist
+    private void init(){
+        dateTimeOfCreate = LocalDateTime.now();
+    }
+
     public int getId() {
         return id;
     }
@@ -68,6 +82,14 @@ public class Product {
         return seller;
     }
 
+    public List<Image> getImageList() {
+        return imageList;
+    }
+
+    public LocalDateTime getDateTimeOfCreate() {
+        return dateTimeOfCreate;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -90,5 +112,13 @@ public class Product {
 
     public void setSeller(String seller) {
         this.seller = seller;
+    }
+
+    public void setImageList(List<Image> imageList) {
+        this.imageList = imageList;
+    }
+
+    public void setDateTimeOfCreate(LocalDateTime dateTimeOfCreate) {
+        this.dateTimeOfCreate = dateTimeOfCreate;
     }
 }
