@@ -82,7 +82,7 @@ public class AdminController {
             return "product/addProduct";
         }
 
-        if(file_one != null){ //Проверка на пустоту
+        if(!file_one.isEmpty()){ //Проверка на пустоту
             File uploadDir = new File(uploadPuth); //Объект по хранению пути сохранения
             if(!uploadDir.exists()){ //Если путь не существует
                 uploadDir.mkdir(); //Создаем этот путь
@@ -96,7 +96,7 @@ public class AdminController {
             product.addImageProduct(image);
         }
 
-        if(file_two != null){ //Проверка на пустоту
+        if(!file_two.isEmpty()){ //Проверка на пустоту
             File uploadDir = new File(uploadPuth); //Объект по хранению пути сохранения
             if(!uploadDir.exists()){ //Если путь не существует
                 uploadDir.mkdir(); //Создаем этот путь
@@ -110,7 +110,7 @@ public class AdminController {
             product.addImageProduct(image);
         }
 
-        if(file_three != null){ //Проверка на пустоту
+        if(!file_three.isEmpty()){ //Проверка на пустоту
             File uploadDir = new File(uploadPuth); //Объект по хранению пути сохранения
             if(!uploadDir.exists()){ //Если путь не существует
                 uploadDir.mkdir(); //Создаем этот путь
@@ -124,7 +124,7 @@ public class AdminController {
             product.addImageProduct(image);
         }
 
-        if(file_four != null){ //Проверка на пустоту
+        if(!file_four.isEmpty()){ //Проверка на пустоту
             File uploadDir = new File(uploadPuth); //Объект по хранению пути сохранения
             if(!uploadDir.exists()){ //Если путь не существует
                 uploadDir.mkdir(); //Создаем этот путь
@@ -138,7 +138,7 @@ public class AdminController {
             product.addImageProduct(image);
         }
 
-        if(file_five != null){ //Проверка на пустоту
+        if(!file_five.isEmpty()){ //Проверка на пустоту
             File uploadDir = new File(uploadPuth); //Объект по хранению пути сохранения
             if(!uploadDir.exists()){ //Если путь не существует
                 uploadDir.mkdir(); //Создаем этот путь
