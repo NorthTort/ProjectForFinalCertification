@@ -10,9 +10,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
@@ -63,7 +65,11 @@ public class AdminController {
 
 //    Метод добавляет объект с формы в таблицу product
     @PostMapping("/product/add")
-    public String addProduct(@ModelAttribute("product") Product product, @RequestParam("file_one") MultipartFile file_two, @RequestParam("file_two") MultipartFile file_three, @RequestParam("file_three") MultipartFile file_four, @RequestParam("file_four") MultipartFile file_five, @RequestParam("file_five") MultipartFile file_one) throws IOException {
+    public String addProduct(@ModelAttribute("product") @Valid Product product, BindingResult bindingResult, @RequestParam("file_one") MultipartFile file_two, @RequestParam("file_two") MultipartFile file_three, @RequestParam("file_three") MultipartFile file_four, @RequestParam("file_four") MultipartFile file_five, @RequestParam("file_five") MultipartFile file_one) throws IOException {
+
+        if(bindingResult.hasErrors()){
+            return "product/addProduct";
+        }
 
         if(file_one != null){ //Проверка на пустоту
             File uploadDir = new File(uploadPuth); //Объект по хранению пути сохранения
