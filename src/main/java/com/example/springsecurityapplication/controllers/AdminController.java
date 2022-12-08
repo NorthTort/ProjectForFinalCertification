@@ -4,6 +4,7 @@ import com.example.springsecurityapplication.models.Image;
 import com.example.springsecurityapplication.models.Product;
 import com.example.springsecurityapplication.security.PersonDetails;
 import com.example.springsecurityapplication.servises.ProductServise;
+import com.example.springsecurityapplication.util.ProductValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
@@ -31,9 +32,12 @@ public class AdminController {
     @Value("${upload.path}")
     private String uploadPuth;
 
+    private final ProductValidator productValidator;
+
     private final ProductServise productServise;
     @Autowired
-    public AdminController(ProductServise productServise) {
+    public AdminController(ProductValidator productValidator, ProductServise productServise) {
+        this.productValidator = productValidator;
         this.productServise = productServise;
     }
 
@@ -67,6 +71,7 @@ public class AdminController {
     @PostMapping("/product/add")
     public String addProduct(@ModelAttribute("product") @Valid Product product, BindingResult bindingResult, @RequestParam("file_one") MultipartFile file_two, @RequestParam("file_two") MultipartFile file_three, @RequestParam("file_three") MultipartFile file_four, @RequestParam("file_four") MultipartFile file_five, @RequestParam("file_five") MultipartFile file_one) throws IOException {
 
+        productValidator.validate(product, bindingResult);
         if(bindingResult.hasErrors()){
             return "product/addProduct";
         }
