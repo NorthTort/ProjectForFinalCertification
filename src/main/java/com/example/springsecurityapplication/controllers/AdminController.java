@@ -1,14 +1,21 @@
 package com.example.springsecurityapplication.controllers;
 
+import com.example.springsecurityapplication.models.Image;
 import com.example.springsecurityapplication.models.Product;
 import com.example.springsecurityapplication.security.PersonDetails;
 import com.example.springsecurityapplication.servises.ProductServise;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/admin")
@@ -18,6 +25,9 @@ public class AdminController {
 
 //    Указали, что к данному методу имеет доступ только пользователь с ролью ADMIN
 //    @PreAuthorize("hasRole('ROLE_ADMIN')")
+
+    @Value("${upload.path}")
+    private String uploadPuth;
 
     private final ProductServise productServise;
     @Autowired
@@ -53,7 +63,77 @@ public class AdminController {
 
 //    Метод добавляет объект с формы в таблицу product
     @PostMapping("/product/add")
-    public String addProduct(@ModelAttribute("product") Product product){
+    public String addProduct(@ModelAttribute("product") Product product, @RequestParam("file_one") MultipartFile file_one, @RequestParam("file_two") MultipartFile file_two, @RequestParam("file_three") MultipartFile file_three, @RequestParam("file_four") MultipartFile file_four, @RequestParam("file_five") MultipartFile file_five) throws IOException {
+
+        if(file_one != null){ //Проверка на пустоту
+            File uploadDir = new File(uploadPuth); //Объект по хранению пути сохранения
+            if(!uploadDir.exists()){ //Если путь не существует
+                uploadDir.mkdir(); //Создаем этот путь
+            }
+            String uuidFile = UUID.randomUUID().toString(); //Создаем уникальное имя файла (UUID - уникальный идентификатор)
+            String resultFileName = uuidFile + "." + file_one.getOriginalFilename();
+            file_one.transferTo(new File(uploadPuth + "/" + resultFileName)); //Загружаем файл по указанному пути
+            Image image = new Image();
+            image.setProduct(product);
+            image.setFileName(resultFileName);
+            product.addImageProduct(image);
+        }
+
+        if(file_two != null){ //Проверка на пустоту
+            File uploadDir = new File(uploadPuth); //Объект по хранению пути сохранения
+            if(!uploadDir.exists()){ //Если путь не существует
+                uploadDir.mkdir(); //Создаем этот путь
+            }
+            String uuidFile = UUID.randomUUID().toString(); //Создаем уникальное имя файла (UUID - уникальный идентификатор)
+            String resultFileName = uuidFile + "." + file_two.getOriginalFilename();
+            file_two.transferTo(new File(uploadPuth + "/" + resultFileName)); //Загружаем файл по указанному пути
+            Image image = new Image();
+            image.setProduct(product);
+            image.setFileName(resultFileName);
+            product.addImageProduct(image);
+        }
+
+        if(file_three != null){ //Проверка на пустоту
+            File uploadDir = new File(uploadPuth); //Объект по хранению пути сохранения
+            if(!uploadDir.exists()){ //Если путь не существует
+                uploadDir.mkdir(); //Создаем этот путь
+            }
+            String uuidFile = UUID.randomUUID().toString(); //Создаем уникальное имя файла (UUID - уникальный идентификатор)
+            String resultFileName = uuidFile + "." + file_three.getOriginalFilename();
+            file_three.transferTo(new File(uploadPuth + "/" + resultFileName)); //Загружаем файл по указанному пути
+            Image image = new Image();
+            image.setProduct(product);
+            image.setFileName(resultFileName);
+            product.addImageProduct(image);
+        }
+
+        if(file_four != null){ //Проверка на пустоту
+            File uploadDir = new File(uploadPuth); //Объект по хранению пути сохранения
+            if(!uploadDir.exists()){ //Если путь не существует
+                uploadDir.mkdir(); //Создаем этот путь
+            }
+            String uuidFile = UUID.randomUUID().toString(); //Создаем уникальное имя файла (UUID - уникальный идентификатор)
+            String resultFileName = uuidFile + "." + file_four.getOriginalFilename();
+            file_four.transferTo(new File(uploadPuth + "/" + resultFileName)); //Загружаем файл по указанному пути
+            Image image = new Image();
+            image.setProduct(product);
+            image.setFileName(resultFileName);
+            product.addImageProduct(image);
+        }
+
+        if(file_five != null){ //Проверка на пустоту
+            File uploadDir = new File(uploadPuth); //Объект по хранению пути сохранения
+            if(!uploadDir.exists()){ //Если путь не существует
+                uploadDir.mkdir(); //Создаем этот путь
+            }
+            String uuidFile = UUID.randomUUID().toString(); //Создаем уникальное имя файла (UUID - уникальный идентификатор)
+            String resultFileName = uuidFile + "." + file_five.getOriginalFilename();
+            file_five.transferTo(new File(uploadPuth + "/" + resultFileName)); //Загружаем файл по указанному пути
+            Image image = new Image();
+            image.setProduct(product);
+            image.setFileName(resultFileName);
+            product.addImageProduct(image);
+        }
         productServise.saveProduct(product);
         return "redirect:/admin";
     }

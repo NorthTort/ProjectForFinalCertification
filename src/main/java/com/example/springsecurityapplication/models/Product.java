@@ -58,6 +58,11 @@ public class Product {
         dateTimeOfCreate = LocalDateTime.now();
     }
 
+    public void addImageProduct(Image image){
+        image.setProduct(this);
+        imageList.add(image);
+    }
+
     public int getId() {
         return id;
     }

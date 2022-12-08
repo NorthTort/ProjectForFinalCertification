@@ -20,6 +20,22 @@ public class Image {
         this.fileName = fileName;
         this.product = product;
     }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
 }
 
 
