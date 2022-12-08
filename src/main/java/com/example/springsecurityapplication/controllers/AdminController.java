@@ -1,7 +1,9 @@
 package com.example.springsecurityapplication.controllers;
 
+import com.example.springsecurityapplication.models.Category;
 import com.example.springsecurityapplication.models.Image;
 import com.example.springsecurityapplication.models.Product;
+import com.example.springsecurityapplication.repositories.CategoryRepository;
 import com.example.springsecurityapplication.security.PersonDetails;
 import com.example.springsecurityapplication.servises.ProductServise;
 import com.example.springsecurityapplication.util.ProductValidator;
@@ -35,10 +37,13 @@ public class AdminController {
     private final ProductValidator productValidator;
 
     private final ProductServise productServise;
+
+    private final CategoryRepository categoryRepository;
     @Autowired
-    public AdminController(ProductValidator productValidator, ProductServise productServise) {
+    public AdminController(ProductValidator productValidator, ProductServise productServise, CategoryRepository categoryRepository) {
         this.productValidator = productValidator;
         this.productServise = productServise;
+        this.categoryRepository = categoryRepository;
     }
 
 //    Метод по отображению главной страницы администратора с выводом товаров
@@ -64,6 +69,7 @@ public class AdminController {
     @GetMapping("/product/add") //Обработали тот путь на который у нас ведет ссылка добавить товар
     public String addProduct(Model model){
         model.addAttribute("product", new Product()); //Положили в модель пустой объект товара, чтобы потом его привязать к форме
+        model.addAttribute("categoty", categoryRepository.findAll()); //Положили в модель пустой объект товара, чтобы потом его привязать к форме
         return "product/addProduct";
     }
 
@@ -161,6 +167,7 @@ public class AdminController {
     public String editProduct(@PathVariable("id") int id, Model model){ //Принимаем "id" и помещаем его в специальную переменную id
 //    Кладем в модель атрибут нашей страницы editProduct.html и продукт, который получили по id
         model.addAttribute("editProduct", productServise.getProductId(id));
+        model.addAttribute("categoty", categoryRepository.findAll());
         return "product/editProduct";
     }
 

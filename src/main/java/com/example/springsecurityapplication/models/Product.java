@@ -50,6 +50,17 @@ public class Product {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "product")
     private List<Image> imageList = new ArrayList<>();
 
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    @ManyToOne(optional = false)
+    private Category category;
+
     private LocalDateTime dateTimeOfCreate;
 
     //Будет заполняться дата и время при создании объекта класса
