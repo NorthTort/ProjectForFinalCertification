@@ -11,5 +11,9 @@
   <p th:text="'Склад: ' + ${product.getWarehouse()}"></p>
   <p th:text="'Продавец: ' + ${product.getSeller()}"></p>
   <br>
+
+    <div th:each="img : ${product.getImageList()}">
+        <img th:src="'/img/' + ${img.getFileName()}" width="300px">
+    </div>
 </body>
 </html>

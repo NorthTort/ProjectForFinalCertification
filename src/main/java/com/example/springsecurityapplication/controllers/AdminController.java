@@ -63,7 +63,7 @@ public class AdminController {
 
 //    Метод добавляет объект с формы в таблицу product
     @PostMapping("/product/add")
-    public String addProduct(@ModelAttribute("product") Product product, @RequestParam("file_one") MultipartFile file_one, @RequestParam("file_two") MultipartFile file_two, @RequestParam("file_three") MultipartFile file_three, @RequestParam("file_four") MultipartFile file_four, @RequestParam("file_five") MultipartFile file_five) throws IOException {
+    public String addProduct(@ModelAttribute("product") Product product, @RequestParam("file_one") MultipartFile file_two, @RequestParam("file_two") MultipartFile file_three, @RequestParam("file_three") MultipartFile file_four, @RequestParam("file_four") MultipartFile file_five, @RequestParam("file_five") MultipartFile file_one) throws IOException {
 
         if(file_one != null){ //Проверка на пустоту
             File uploadDir = new File(uploadPuth); //Объект по хранению пути сохранения
