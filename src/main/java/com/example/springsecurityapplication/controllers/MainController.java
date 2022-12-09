@@ -1,5 +1,6 @@
 package com.example.springsecurityapplication.controllers;
 
+import com.example.springsecurityapplication.repositories.ProductRepository;
 import com.example.springsecurityapplication.servises.ProductServise;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,10 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/product")
 public class MainController {
 
+    private final ProductRepository productRepository;
+
     private  final ProductServise productServise;
 
     @Autowired
-    public MainController(ProductServise productServise) {
+    public MainController(ProductRepository productRepository, ProductServise productServise) {
+        this.productRepository = productRepository;
         this.productServise = productServise;
     }
 
