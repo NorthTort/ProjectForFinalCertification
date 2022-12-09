@@ -239,8 +239,6 @@ public class UserController {
         model.addAttribute("value_search", search);
         model.addAttribute("value_ot", Ot);
         model.addAttribute("value_do", Do);
-//        model.addAttribute("value_price", price);
-//        model.addAttribute("value_category", category);
         model.addAttribute("products", productServise.getAllProduct());
 
         return "user/index";

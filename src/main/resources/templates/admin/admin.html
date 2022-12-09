@@ -17,18 +17,18 @@
           <legend>Выберите параметры для сортировки, поиска, фильтрации</legend>
           <br>
           <label for="search">Поиск по наименованию</label>
-          <input type="search" name="search" id="search">
+          <input type="search" name="search" th:value="*{value_search}" id="search">
           <br>
           <p>Цена, Р</p>
           <label for="ot">От</label>
-          <input type="text" name="ot" id="ot">
+          <input type="text" name="ot" id="ot"  th:value="*{value_ot}">
           <label for="do">До</label>
-          <input type="text" name="do" id="do">
+          <input type="text" name="do" id="do" th:value="*{value_do}">
           <br>
-          <input type="radio" id="ascending_price" name="price">
+          <input type="radio" id="ascending_price" name="price" value="ascending_price">
           <label for="ascending_price">Отсортировать по возрастанию цены</label>
           <br>
-          <input type="radio" id="descending_price" name="price">
+          <input type="radio" id="descending_price" name="price" value="descending_price">
           <label for="descending_price">Отсортировать по убыванию цены</label>
           <br>
           <p>По категории:</p>
