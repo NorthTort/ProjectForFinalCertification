@@ -14,6 +14,10 @@
         <input type="submit" value="Корзина">
     </form>
 
+    <form method="get" th:action="@{/orders}">
+        <input type="submit" value="Заказы">
+    </form>
+
 
     <form th:method="post" th:action="@{/product/search}">
         <fieldset>

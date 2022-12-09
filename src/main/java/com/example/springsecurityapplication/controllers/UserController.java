@@ -1,8 +1,11 @@
 package com.example.springsecurityapplication.controllers;
 
+import com.example.springsecurityapplication.enumm.Status;
 import com.example.springsecurityapplication.models.Cart;
+import com.example.springsecurityapplication.models.Order;
 import com.example.springsecurityapplication.models.Product;
 import com.example.springsecurityapplication.repositories.CartRepository;
+import com.example.springsecurityapplication.repositories.OrderRepository;
 import com.example.springsecurityapplication.repositories.ProductRepository;
 import com.example.springsecurityapplication.security.PersonDetails;
 import com.example.springsecurityapplication.servises.ProductServise;
@@ -17,15 +20,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 public class UserController {
 
+    private final OrderRepository orderRepository;
     private final CartRepository cartRepository;
     private final ProductRepository productRepository;
     private final ProductServise productServise;
 
-    public UserController(CartRepository cartRepository, ProductRepository productRepository, ProductServise productServise) {
+    public UserController(OrderRepository orderRepository, CartRepository cartRepository, ProductRepository productRepository, ProductServise productServise) {
+        this.orderRepository = orderRepository;
         this.cartRepository = cartRepository;
         this.productRepository = productRepository;
         this.productServise = productServise;
@@ -106,6 +112,41 @@ public class UserController {
         cartRepository.deleteCartById(id, id_person);
         return "redirect:/cart";
     }
+
+    @GetMapping("/order/create")
+    public String createOrder(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        PersonDetails personDetails = (PersonDetails) authentication.getPrincipal();
+
+        int id_person = personDetails.getPerson().getId();
+
+        List<Cart> cartList = cartRepository.findByPersonId(id_person);
+        List<Product> productList = new ArrayList<>();
+
+        for(Cart cart : cartList){
+            productList.add(productServise.getProductId(cart.getProductId()));
+        }
+
+        String uuid = UUID.randomUUID().toString();
+
+        for(Product product : productList){
+            Order newOrder = new Order(uuid, 1, product.getPrice(), Status.Оформлен, product, personDetails.getPerson());
+            orderRepository.save(newOrder);
+            cartRepository.deleteCartById(product.getId(), id_person);
+        }
+
+        return "redirect:/orders";
+    }
+
+    @GetMapping("/orders")
+    public String ordersUser(Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        PersonDetails personDetails = (PersonDetails) authentication.getPrincipal();
+        List<Order> orderList = orderRepository.findByPerson(personDetails.getPerson());
+        model.addAttribute("orders",orderList);
+        return "/user/orders";
+    }
+
 
     @PostMapping("/product/search")
     public String productSearch(@RequestParam("search") String search, @RequestParam("ot") String Ot, @RequestParam("do") String Do, @RequestParam(value = "price", required = false, defaultValue = "") String price, @RequestParam(value = "category", required = false, defaultValue = "") String category, Model model){
@@ -301,4 +342,5 @@ public class UserController {
 
         return "user/index";
     }
+
 }

@@ -35,6 +35,20 @@ public class Product {
     @Column(name = "seller", nullable = false)
     @NotEmpty(message = "Продавец товара не может быть пустым")
     private String seller;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "product")
+    private List<Image> imageList = new ArrayList<>();
+
+    private LocalDateTime dateTimeOfCreate;
+
+    @ManyToOne(optional = false)
+    private Category category;
+
+    @ManyToMany()
+    @JoinTable(name = "product_cart", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "person_id"))
+    private List<Person> personList;
+
+    @OneToMany(mappedBy = "product")
+    private List<Order> orderList;
 
     public Product() {
     }
@@ -47,11 +61,6 @@ public class Product {
         this.seller = seller;
     }
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "product")
-    private List<Image> imageList = new ArrayList<>();
-
-
-
     public Category getCategory() {
         return category;
     }
@@ -60,14 +69,7 @@ public class Product {
         this.category = category;
     }
 
-    @ManyToOne(optional = false)
-    private Category category;
 
-    @ManyToMany()
-    @JoinTable(name = "product_cart", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "person_id"))
-    private List<Person> personList;
-
-    private LocalDateTime dateTimeOfCreate;
 
     //Будет заполняться дата и время при создании объекта класса
     @PrePersist
