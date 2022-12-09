@@ -10,6 +10,11 @@
         <input type="submit" value="Выйти из личного кабинета">
     </form>
 
+    <form method="get" th:action="@{/cart}">
+        <input type="submit" value="Корзина">
+    </form>
+
+
     <form th:method="post" th:action="@{/product/search}">
         <fieldset>
             <legend>Выберите параметры для сортировки, поиска, фильтрации</legend>
@@ -46,7 +51,10 @@
         <img th:src="'/img/' + ${product.imageList[0].getFileName()}" width="300px">
         <br>
         <a th:href="@{/product/info/{id}(id=${product.getId()})}" th:text="${product.getTitle()}"></a>
-        <p th:text="'Цена: ' + ${product.getPrice()}"></p>
+        <div>
+            <p th:text="'Цена: ' + ${product.getPrice()}" style="display: inline-block"></p>
+            <a th:href="@{/cart/add/{id}(id=${product.getId()})}" style="display: inline-block">Добавить в корзину</a>
+        </div>
     </div>
 <hr>
     <h3>Доступные товары</h3>
@@ -55,6 +63,8 @@
         <br>
         <a th:href="@{/product/info/{id}(id=${product.getId()})}" th:text="${product.getTitle()}" id="title"></a>
         <p th:text="'Цена: ' + ${product.getPrice()}"></p>
+        <a th:href="@{/cart/add/{id}(id=${product.getId()})}">Добавить в корзину</a>
+        <hr>
     </div>
 </body>
 </html>

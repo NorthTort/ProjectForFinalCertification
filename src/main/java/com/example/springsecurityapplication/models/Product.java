@@ -50,6 +50,8 @@ public class Product {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "product")
     private List<Image> imageList = new ArrayList<>();
 
+
+
     public Category getCategory() {
         return category;
     }
@@ -60,6 +62,10 @@ public class Product {
 
     @ManyToOne(optional = false)
     private Category category;
+
+    @ManyToMany()
+    @JoinTable(name = "product_cart", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "person_id"))
+    private List<Person> personList;
 
     private LocalDateTime dateTimeOfCreate;
 

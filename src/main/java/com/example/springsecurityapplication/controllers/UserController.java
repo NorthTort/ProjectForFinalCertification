@@ -1,5 +1,8 @@
 package com.example.springsecurityapplication.controllers;
 
+import com.example.springsecurityapplication.models.Cart;
+import com.example.springsecurityapplication.models.Product;
+import com.example.springsecurityapplication.repositories.CartRepositury;
 import com.example.springsecurityapplication.repositories.ProductRepository;
 import com.example.springsecurityapplication.security.PersonDetails;
 import com.example.springsecurityapplication.servises.ProductServise;
@@ -12,13 +15,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Controller
 public class UserController {
 
+    private final CartRepositury cartRepositury;
     private final ProductRepository productRepository;
     private final ProductServise productServise;
 
-    public UserController(ProductRepository productRepository, ProductServise productServise) {
+    public UserController(CartRepositury cartRepositury, ProductRepository productRepository, ProductServise productServise) {
+        this.cartRepositury = cartRepositury;
         this.productRepository = productRepository;
         this.productServise = productServise;
     }
@@ -41,6 +49,46 @@ public class UserController {
         model.addAttribute("products", productServise.getAllProduct());
 
         return "user/index";
+    }
+
+//    Добавить товар в корзину
+    @GetMapping("/cart/add/{id}")
+    public String addProductInCart(@PathVariable("id") int id, Model model){
+        Product product = productServise.getProductId(id);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        PersonDetails personDetails = (PersonDetails) authentication.getPrincipal();
+
+        int id_person = personDetails.getPerson().getId();
+        Cart cart = new Cart(id_person, product.getId());
+
+        cartRepositury.save(cart);
+
+        return "redirect:/cart";
+
+    }
+
+    @GetMapping("/cart")
+    public String cart(Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        PersonDetails personDetails = (PersonDetails) authentication.getPrincipal();
+
+        int id_person = personDetails.getPerson().getId();
+
+        List<Cart> cartList = cartRepositury.findByPersonId(id_person);
+        List<Product> productList = new ArrayList<>();
+
+        for(Cart cart : cartList){
+            productList.add(productServise.getProductId(cart.getPersonId()));
+        }
+
+        float price = 0;
+        for(Product product : productList){
+            price += product.getPrice();
+        }
+
+        model.addAttribute("price", price);
+        model.addAttribute("cart_product", productList);
+        return "user/cart";
     }
 
     @GetMapping("/info/{id}")
