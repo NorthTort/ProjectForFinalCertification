@@ -2,7 +2,7 @@ package com.example.springsecurityapplication.controllers;
 
 import com.example.springsecurityapplication.models.Cart;
 import com.example.springsecurityapplication.models.Product;
-import com.example.springsecurityapplication.repositories.CartRepositury;
+import com.example.springsecurityapplication.repositories.CartRepository;
 import com.example.springsecurityapplication.repositories.ProductRepository;
 import com.example.springsecurityapplication.security.PersonDetails;
 import com.example.springsecurityapplication.servises.ProductServise;
@@ -21,12 +21,12 @@ import java.util.List;
 @Controller
 public class UserController {
 
-    private final CartRepositury cartRepositury;
+    private final CartRepository cartRepository;
     private final ProductRepository productRepository;
     private final ProductServise productServise;
 
-    public UserController(CartRepositury cartRepositury, ProductRepository productRepository, ProductServise productServise) {
-        this.cartRepositury = cartRepositury;
+    public UserController(CartRepository cartRepository, ProductRepository productRepository, ProductServise productServise) {
+        this.cartRepository = cartRepository;
         this.productRepository = productRepository;
         this.productServise = productServise;
     }
@@ -61,9 +61,9 @@ public class UserController {
         int id_person = personDetails.getPerson().getId();
         Cart cart = new Cart(id_person, product.getId());
 
-        cartRepositury.save(cart);
+        cartRepository.save(cart);
 
-        return "redirect:/cart";
+        return "redirect:/index";
 
     }
 
@@ -74,11 +74,11 @@ public class UserController {
 
         int id_person = personDetails.getPerson().getId();
 
-        List<Cart> cartList = cartRepositury.findByPersonId(id_person);
+        List<Cart> cartList = cartRepository.findByPersonId(id_person);
         List<Product> productList = new ArrayList<>();
 
         for(Cart cart : cartList){
-            productList.add(productServise.getProductId(cart.getPersonId()));
+            productList.add(productServise.getProductId(cart.getProductId()));
         }
 
         float price = 0;
@@ -95,6 +95,16 @@ public class UserController {
     public String infoProduct(@PathVariable("id") int id, Model model){
         model.addAttribute("product", productServise.getProductId(id));
         return "product/infoProduct";
+    }
+
+    @GetMapping("/cart/delete/{id}")
+    public String deleteProduct(Model model, @PathVariable("id") int id){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        PersonDetails personDetails = (PersonDetails) authentication.getPrincipal();
+
+        int id_person = personDetails.getPerson().getId();
+        cartRepository.deleteCartById(id, id_person);
+        return "redirect:/cart";
     }
 
     @PostMapping("/product/search")
