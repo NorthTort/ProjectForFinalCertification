@@ -6,18 +6,18 @@
 </head>
 <body>
     <h3>Личный кабинет пользователя</h3>
-    <form method="post" th:action="@{/logout}">
-        <input type="submit" value="Выйти из личного кабинета">
-    </form>
 
-    <form method="get" th:action="@{/cart}">
+    <form method="get" th:action="@{/cart}"  style="display: inline-block">
         <input type="submit" value="Корзина">
     </form>
 
-    <form method="get" th:action="@{/orders}">
+    <form method="get" th:action="@{/orders}"  style="display: inline-block">
         <input type="submit" value="Заказы">
     </form>
 
+    <form method="post" th:action="@{/logout}"  style="display: inline-block">
+        <input type="submit" value="Выйти из личного кабинета">
+    </form>
 
     <form th:method="post" th:action="@{/product/search}">
         <fieldset>

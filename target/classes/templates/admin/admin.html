@@ -6,11 +6,20 @@
 </head>
 <body>
   <h3>Личный кабинет админа</h3>
-    <form th:method="post" th:action="@{/logout}">
+
+      <form method="get" th:action="@{/admin/product/add}"  style="display: inline-block">
+          <input type="submit" value="Добавить товар">
+      </form>
+
+      <form method="get" th:action="@{/admin/listOrders}"  style="display: inline-block">
+          <input type="submit" value="Заказы">
+      </form>
+
+    <form th:method="post" th:action="@{/logout}" style="display: inline-block">
         <input type="submit" value="Выйти из личного кабинета">
     </form>
 
-    <a href="/admin/product/add">Добавить товар</a>
+<!--    <a href="/admin/product/add">Добавить товар</a>-->
 
   <form th:method="post" th:action="@{/product/search}">
       <fieldset>

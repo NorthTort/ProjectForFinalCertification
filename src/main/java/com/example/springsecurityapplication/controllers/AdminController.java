@@ -3,8 +3,10 @@ package com.example.springsecurityapplication.controllers;
 import com.example.springsecurityapplication.models.Image;
 import com.example.springsecurityapplication.models.Product;
 import com.example.springsecurityapplication.repositories.CategoryRepository;
+import com.example.springsecurityapplication.repositories.OrderRepository;
 import com.example.springsecurityapplication.repositories.ProductRepository;
 import com.example.springsecurityapplication.security.PersonDetails;
+import com.example.springsecurityapplication.servises.OrderServise;
 import com.example.springsecurityapplication.servises.ProductServise;
 import com.example.springsecurityapplication.util.ProductValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +36,8 @@ public class AdminController {
     @Value("${upload.path}")
     private String uploadPuth;
 
+    private final OrderServise orderServise;
+    private final OrderRepository orderRepository;
     private final ProductRepository productRepository;
     private final ProductValidator productValidator;
 
@@ -41,7 +45,9 @@ public class AdminController {
 
     private final CategoryRepository categoryRepository;
     @Autowired
-    public AdminController(ProductRepository productRepository, ProductValidator productValidator, ProductServise productServise, CategoryRepository categoryRepository) {
+    public AdminController(OrderServise orderServise, OrderRepository orderRepository, ProductRepository productRepository, ProductValidator productValidator, ProductServise productServise, CategoryRepository categoryRepository) {
+        this.orderServise = orderServise;
+        this.orderRepository = orderRepository;
         this.productRepository = productRepository;
         this.productValidator = productValidator;
         this.productServise = productServise;
@@ -178,6 +184,12 @@ public class AdminController {
     public String editProduct(@ModelAttribute("editProduct") Product product, @PathVariable("id") int id){
         productServise.updateProduct(id, product);
         return "redirect:/admin";
+    }
+
+    @GetMapping("/listOrders")
+    public String ordersUser(Model model){
+        model.addAttribute("orders",orderServise.getAllOrder());
+        return "admin/listOrders";
     }
 
     @PostMapping("/product/search")

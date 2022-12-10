@@ -7,7 +7,17 @@
 </head>
 <body>
 
+<form th:action="@{auth/login}"  style="display: inline-block">
+    <input type="submit" value="Авторизация">
+</form>
+
+<form method="post" th:action="@{/auth/registration}"  style="display: inline-block">
+    <input type="submit" value="Регистрация">
+</form>
+
 <form th:method="post" th:action="@{/product/search}">
+
+
     <fieldset>
         <legend>Выберите параметры для сортировки, поиска, фильтрации</legend>
         <br>

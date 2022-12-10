@@ -5,6 +5,10 @@
     <title>Информация о товаре</title>
 </head>
 <body>
+<form method="get" th:action="@{/product}">
+    <input type="submit" value="На главную">
+</form>
+
   <p th:text="'Наименование: ' + ${product.getTitle()}"></p>
   <p th:text="'Категория: ' + ${product.getCategory()}"></p>
   <p th:text="'Описание: ' + ${product.getDescription()}"></p>
