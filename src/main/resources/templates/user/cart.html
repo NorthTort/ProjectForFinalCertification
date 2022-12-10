@@ -7,6 +7,19 @@
 </head>
 <body>
   <h3>Корзина товаров</h3>
+
+  <form method="get" th:action="@{/index}"  style="display: inline-block">
+      <input type="submit" value="Личный кабинет">
+  </form>
+
+  <form method="get" th:action="@{/orders}"  style="display: inline-block">
+      <input type="submit" value="Заказы">
+  </form>
+
+  <form method="post" th:action="@{/logout}"  style="display: inline-block">
+      <input type="submit" value="Выйти из личного кабинета">
+  </form>
+
   <div th:each="product : ${cart_product}">
       <img th:src="'/img/' + ${product.imageList[0].getFileName()}" width="300px">
       <br>

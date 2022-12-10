@@ -5,6 +5,14 @@
   <title>Редактирование товара</title>
 </head>
 <body>
+<form method="get" th:action="@{/admin}"  style="display: inline-block">
+  <input type="submit" value="Личный кабинет">
+</form>
+
+<form method="post" th:action="@{/logout}"  style="display: inline-block">
+  <input type="submit" value="Выйти из личного кабинета">
+</form>
+
 <h3>Редактирование товара</h3>
 <form th:method="post" th:action="@{/admin/product/edit/{id}(id=${editProduct.getId()})}" th:object="${editProduct}">
   <label for="title">Введите наименование:</label>
