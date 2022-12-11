@@ -29,6 +29,8 @@
     <p th:text="'Дата заказа: ' + ${#temporals.format(order.getDateTime(), 'dd-MMM-yyyy hh:mm:ss')}"></p>
     <p th:text="'Статус: ' + ${order.getStatus()}"></p>
     <p th:text="'Id клиента: ' + ${order.getPerson().getId()}"></p>
+
+    <a th:href="@{/admin/listOrders/edit/{id}(id=${order.getId()})}">Изменить статус заказа</a>
   </div>
   <hr>
 </div>

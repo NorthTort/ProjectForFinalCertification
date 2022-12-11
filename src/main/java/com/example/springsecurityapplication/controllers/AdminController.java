@@ -1,6 +1,8 @@
 package com.example.springsecurityapplication.controllers;
 
+import com.example.springsecurityapplication.enumm.Status;
 import com.example.springsecurityapplication.models.Image;
+import com.example.springsecurityapplication.models.Order;
 import com.example.springsecurityapplication.models.Product;
 import com.example.springsecurityapplication.repositories.CategoryRepository;
 import com.example.springsecurityapplication.repositories.OrderRepository;
@@ -77,7 +79,7 @@ public class AdminController {
     @GetMapping("/product/add") //Обработали тот путь на который у нас ведет ссылка добавить товар
     public String addProduct(Model model){
         model.addAttribute("product", new Product()); //Положили в модель пустой объект товара, чтобы потом его привязать к форме
-        model.addAttribute("categoty", categoryRepository.findAll()); //Положили в модель пустой объект товара, чтобы потом его привязать к форме
+        model.addAttribute("category", categoryRepository.findAll()); //Положили в модель пустой объект товара, чтобы потом его привязать к форме
         return "product/addProduct";
     }
 
@@ -175,9 +177,10 @@ public class AdminController {
     public String editProduct(@PathVariable("id") int id, Model model){ //Принимаем "id" и помещаем его в специальную переменную id
 //    Кладем в модель атрибут нашей страницы editProduct.html и продукт, который получили по id
         model.addAttribute("editProduct", productServise.getProductId(id));
-        model.addAttribute("categoty", categoryRepository.findAll());
+        model.addAttribute("category", categoryRepository.findAll());
         return "product/editProduct";
     }
+
 
 //    Метод редактирования product
     @PostMapping("/product/edit/{id}")
@@ -190,6 +193,26 @@ public class AdminController {
     public String ordersUser(Model model){
         model.addAttribute("orders",orderServise.getAllOrder());
         return "admin/listOrders";
+    }
+
+    //    Метод по отображению формы редактирования order
+    @GetMapping("/listOrders/edit/{id}") //Обрабатываем нажатие на ссылку редактировать товар
+    public String editOrder(@PathVariable("id") int id, Model model){ //Принимаем "id" и помещаем его в специальную переменную id
+//    Кладем в модель атрибут нашей страницы editOrder.html и продукт, который получили по id
+        model.addAttribute("editOrder", orderServise.getOrderId(id));
+        model.addAttribute("status", Status.values());
+        return "admin/editOrder";
+    }
+
+    //    Метод редактирования order
+    @PostMapping("/listOrders/edit/{id}")
+    public String editOrder(@ModelAttribute("editOrder") Order order, @PathVariable("id") int id){
+        System.out.println("11111111111111111111111111111111111111111111111111111111111");
+        Order upOrder = orderServise.getOrderId(id);
+        upOrder.setStatus(order.getStatus());
+
+        orderServise.updateOrder(id, upOrder);
+        return "redirect:/admin";
     }
 
     @PostMapping("/product/search")
