@@ -419,4 +419,5 @@ public class AdminController {
         model.addAttribute("orders", orderServise.getAllOrder());
         return "admin/listOrders";
     }
+
 }
