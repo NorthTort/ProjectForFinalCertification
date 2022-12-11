@@ -45,4 +45,10 @@ public class OrderServise {
         orderRepository.save(order);
     }
 
+    //    Метод получает товар по наименованию
+    public Order getOrderFindByNumber(Order order){
+        List<Order> order_db = orderRepository.findByNumber(order.getNumber());
+        return (Order) order_db;
+    }
+
 }

@@ -207,7 +207,6 @@ public class AdminController {
     //    Метод редактирования order
     @PostMapping("/listOrders/edit/{id}")
     public String editOrder(@ModelAttribute("editOrder") Order order, @PathVariable("id") int id){
-        System.out.println("11111111111111111111111111111111111111111111111111111111111");
         Order upOrder = orderServise.getOrderId(id);
         upOrder.setStatus(order.getStatus());
 
@@ -408,5 +407,16 @@ public class AdminController {
         model.addAttribute("products", productServise.getAllProduct());
 
         return "admin/admin";
+    }
+
+
+    @PostMapping("/listOrders/search")
+    public String orderSearch(@RequestParam("search") String search, Model model){
+        if(!search.isEmpty()){
+            model.addAttribute("search_order", orderRepository.findByNumber(search));
+        }
+        model.addAttribute("value_search", search);
+        model.addAttribute("orders", orderServise.getAllOrder());
+        return "admin/listOrders";
     }
 }
