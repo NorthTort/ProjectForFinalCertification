@@ -21,7 +21,7 @@ public class MainController {
         this.productServise = productServise;
     }
 
-//    Метод предназначен для отображения товаров без прохождения аунтефикации и валидации
+//    Метод предназначен для отображения товаров без прохождения аунтетификации и валидации
     @GetMapping("")
     public String getAllProduct(Model model){
         model.addAttribute("products", productServise.getAllProduct());
@@ -34,8 +34,8 @@ public class MainController {
         return "product/infoProduct";
     }
 
-    @PostMapping("/product/search")
-    public String productSearch(@RequestParam("search") String search, @RequestParam("ot") String Ot, @RequestParam("do") String Do, @RequestParam(value = "price", required = false, defaultValue = "") String price, @RequestParam(value = "category", required = false, defaultValue = "") String category, Model model){
+    @PostMapping("/product/searching")
+    public String searchProduct(@RequestParam("search") String search, @RequestParam("ot") String Ot, @RequestParam("do") String Do, @RequestParam(value = "price", required = false, defaultValue = "") String price, @RequestParam(value = "category", required = false, defaultValue = "") String category, Model model){
 
         //*1234
         if(!search.isEmpty() && !Ot.isEmpty() && !Do.isEmpty() && !price.isEmpty() && !category.isEmpty()){
@@ -221,7 +221,7 @@ public class MainController {
             }
         }
 
-        model.addAttribute("value_search", search);
+        model.addAttribute("value_searching", search);
         model.addAttribute("value_ot", Ot);
         model.addAttribute("value_do", Do);
         model.addAttribute("products", productServise.getAllProduct());

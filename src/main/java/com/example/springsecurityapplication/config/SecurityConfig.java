@@ -28,15 +28,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     //    Метод по настройке аутентификации
     protected void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-//        Производим атентификацию с помощью сервиса
+//        Производим аутентификацию с помощью сервиса
         authenticationManagerBuilder.userDetailsService(personDetailServise).passwordEncoder(getPasswordEncoder());
     }
 
 //        Конфигурируем сам Spring Security
-//        Конфигурирем авторизацию
+//        Конфигурируем авторизацию
     @Override
     protected void configure(HttpSecurity http) throws Exception{
-//        Отключаем защиту от межспйтовой подделки запросов
+//        Отключаем защиту от межсплитовой подделки запросов
         http
 //                Все страницы защищены аутентификацией
                         .authorizeRequests()
@@ -45,13 +45,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .antMatchers("/admin").hasAnyRole("ADMIN")
 
 
-//                        Указываем, что не атентифицированные пользователи могут заходить на страницу с формой и ошибкой
-                        .antMatchers("/auth/login", "/error", "/auth/registration", "/product", "/product/info/{id}", "/img/**", "/product/search").permitAll()
+//                        Указываем, что не аутентифицированные пользователи могут заходить на страницу с формой и ошибкой
+                        .antMatchers("/auth/login", "/error", "/auth/registration", "/product", "/product/info/{id}", "/img/**", "product/product", "/product/searching").permitAll()
 
 //                     Указываем что все остальные страницы доступны пользователям с ролями USER и ADMIN
                         .anyRequest().hasAnyRole("USER","ADMIN")
 
-//                Указываем дальнейшую конфигурацию аутентификации и соединянм с настройкой доступа
+//                Указываем дальнейшую конфигурацию аутентификации и соединениями с настройкой доступа
 //        Указываем какой url запрос будет отправляться при заходе на закрытые страницы
         .and()
         .formLogin().loginPage("/auth/login")
@@ -63,7 +63,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                Второй аргумент это перенаправление на данную страницу в любом случае при успешной аутентификации
                 .defaultSuccessUrl("/index", true)
 
-//                Указываем, куда перенаправляется пользователь при неудачной атентификации
+//                Указываем, куда перенаправляется пользователь при неудачной аутентификации
                 .failureUrl("/auth/login")
                 .and()
 

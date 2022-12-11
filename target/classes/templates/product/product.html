@@ -15,14 +15,14 @@
     <input type="submit" value="Регистрация">
 </form>
 
-<form th:method="post" th:action="@{/product/search}">
+<form th:method="post" th:action="@{/product/searching}">
 
 
     <fieldset>
         <legend>Выберите параметры для сортировки, поиска, фильтрации</legend>
         <br>
         <label for="search">Поиск по наименованию</label>
-        <input type="search" name="search" th:value="*{value_search}" id="search">
+        <input type="search" name="search" th:value="*{value_searching}" id="search">
         <br>
         <p>Цена, Р</p>
         <label for="ot">От</label>
