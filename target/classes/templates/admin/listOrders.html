@@ -60,7 +60,11 @@
       <p th:text="'Статус: ' + ${order.getStatus()}"></p>
       <p th:text="'Id клиента: ' + ${order.getPerson().getId()}"></p>
 
-      <a th:href="@{/admin/listOrders/edit/{id}(id=${order.getId()})}">Изменить статус заказа</a>
+<!--      <a th:href="@{/admin/listOrders/edit/{id}(id=${order.getId()})}">Изменить статус заказа</a>-->
+
+      <form method="get" th:action="@{/admin/listOrders/edit/{id}(id=${order.getId()})}"  style="display: inline-block">
+        <input type="submit" value="Изменить статус заказа">
+      </form>
     </div>
     <hr>
   </div>

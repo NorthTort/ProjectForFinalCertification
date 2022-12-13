@@ -19,9 +19,11 @@
         <div th:if="${param.error}" style="color: red">
             Неправильный логин или пароль
         </div>
-    <a href="/auth/registration">Регистрация</a>
-
+<!--         <a href="/auth/registration">Регистрация</a>-->
     </form>
+        <form method="get" th:action="@{/auth/registration}">
+            <input type="submit" value="Регистрация">
+        </form>
         <form method="get" th:action="@{/product}">
             <input type="submit" value="На главную">
         </form>

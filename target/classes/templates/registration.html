@@ -17,9 +17,12 @@
   <br>
   <input type="submit" value="Зарегистрироваться">
   <br>
-  <a href="/logout">Авторизоваться</a>
+<!--  <a href="/logout">Авторизоваться</a>-->
 </form>
 
+<form method="get" th:action="@{/auth/login}">
+  <input type="submit" value="Авторизоваться">
+</form>
 <form method="get" th:action="@{/product}">
   <input type="submit" value="На главную">
 </form>
