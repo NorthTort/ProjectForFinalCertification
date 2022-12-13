@@ -54,10 +54,13 @@
     <div th:each="product : ${search_product}">
         <img th:src="'/img/' + ${product.imageList[0].getFileName()}" width="300px">
         <br>
-        <a th:href="@{/product/info/{id}(id=${product.getId()})}" th:text="${product.getTitle()}"></a>
+        <a th:href="@{/user/info/{id}(id=${product.getId()})}" th:text="${product.getTitle()}"></a>
         <div>
             <p th:text="'Цена: ' + ${product.getPrice()}" style="display: inline-block"></p>
-            <a th:href="@{/cart/add/{id}(id=${product.getId()})}" style="display: inline-block">Добавить в корзину</a>
+
+            <form method="get" th:action="@{/cart/add/{id}(id=${product.getId()})}"  style="display: inline-block">
+                <input type="submit" value="Добавить в корзину">
+            </form>
         </div>
     </div>
 <hr>
@@ -66,8 +69,13 @@
         <img th:src="'/img/' + ${product.imageList[0].getFileName()}" width="300px">
         <br>
         <a th:href="@{/product/info/{id}(id=${product.getId()})}" th:text="${product.getTitle()}" id="title"></a>
-        <p th:text="'Цена: ' + ${product.getPrice()}"></p>
-        <a th:href="@{/cart/add/{id}(id=${product.getId()})}">Добавить в корзину</a>
+
+        <div>
+            <p th:text="'Цена: ' + ${product.getPrice()}" style="display: inline-block"></p>
+            <form method="get" th:action="@{/cart/add/{id}(id=${product.getId()})}"  style="display: inline-block">
+                <input type="submit" value="Добавить в корзину">
+            </form>
+        </div>
         <hr>
     </div>
 </body>

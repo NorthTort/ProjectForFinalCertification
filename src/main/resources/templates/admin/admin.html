@@ -19,7 +19,7 @@
         <input type="submit" value="Выйти из личного кабинета">
     </form>
 
-  <form th:method="post" th:action="@{/product/search}">
+  <form th:method="POST" th:action="@{/product/admsearch}">
       <fieldset>
           <legend>Выберите параметры для сортировки, поиска, фильтрации</legend>
           <br>
@@ -56,6 +56,14 @@
       <br>
       <a th:href="@{/product/info/{id}(id=${product.getId()})}" th:text="${product.getTitle()}"></a>
           <p th:text="'Цена: ' + ${product.getPrice()}"></p>
+      <div>
+          <form method="get" th:action="@{/admin/product/edit/{id}(id=${product.getId()})}"  style="display: inline-block">
+              <input type="submit" value="Добавить товар">
+          </form>
+          <form method="get" th:action="@{/admin/product/delete/{id}(id=${product.getId()})}"  style="display: inline-block">
+              <input type="submit" value="Удалить товар">
+          </form>
+      </div>
   </div>
 
     <h3>Каталог товаров</h3>
@@ -69,8 +77,15 @@
         <p th:text="'Склад: ' + ${product.getWarehouse()}"></p>
         <p th:text="'Продавец: ' + ${product.getSeller()}"></p>
         <br>
-        <a th:href="@{/admin/product/edit/{id}(id=${product.getId()})}">Редактировать товар</a>
-        <a th:href="@{/admin/product/delete/{id}(id=${product.getId()})}">Удалить товар</a>
+
+        <div>
+            <form method="get" th:action="@{/admin/product/edit/{id}(id=${product.getId()})}"  style="display: inline-block">
+                <input type="submit" value="Редактировать товар">
+            </form>
+            <form method="get" th:action="@{/admin/product/delete/{id}(id=${product.getId()})}"  style="display: inline-block">
+                <input type="submit" value="Удалить товар">
+            </form>
+        </div>
         <hr>
     </div>
 </body>

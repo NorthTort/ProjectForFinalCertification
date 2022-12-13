@@ -22,7 +22,7 @@
         <legend>Выберите параметры для сортировки, поиска, фильтрации</legend>
         <br>
         <label for="search">Поиск по наименованию</label>
-        <input type="search" name="search" th:value="*{value_searching}" id="search">
+        <input type="search" name="search" th:value="*{value_search}" id="search">
         <br>
         <p>Цена, Р</p>
         <label for="ot">От</label>
@@ -54,6 +54,7 @@
     <a th:href="@{/product/info/{id}(id=${product.getId()})}" th:text="${product.getTitle()}"></a>
     <p th:text="'Цена: ' + ${product.getPrice()}"></p>
 </div>
+<hr>
   <h3>Доступные товары</h3>
     <div th:each="product : ${products}">
         <img th:src="'/img/' + ${product.imageList[0].getFileName()}" width="300px">

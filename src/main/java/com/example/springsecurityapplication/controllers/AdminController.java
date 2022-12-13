@@ -211,10 +211,10 @@ public class AdminController {
         upOrder.setStatus(order.getStatus());
 
         orderServise.updateOrder(id, upOrder);
-        return "redirect:/admin";
+        return "redirect:/admin/listOrders";
     }
 
-    @PostMapping("/product/search")
+    @PostMapping("/product/admsearch")
     public String productSearch(@RequestParam("search") String search, @RequestParam("ot") String Ot, @RequestParam("do") String Do, @RequestParam(value = "price", required = false, defaultValue = "") String price, @RequestParam(value = "category", required = false, defaultValue = "") String category, Model model){
 
         //*1234

@@ -21,7 +21,7 @@
     <br>
     <label for="category">Выберите категорию товара:</label>
     <select name="category" th:field="*{category}" id="category">
-      <div th:each="element : ${categoty}">
+      <div th:each="element : ${category}">
           <option th:text="${element.getName()}" th:value="${element.getId()}"></option>
       </div>
     </select>

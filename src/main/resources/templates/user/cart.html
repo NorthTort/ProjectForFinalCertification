@@ -20,6 +20,8 @@
       <input type="submit" value="Выйти из личного кабинета">
   </form>
 
+  <br>
+
   <div th:each="product : ${cart_product}">
       <img th:src="'/img/' + ${product.imageList[0].getFileName()}" width="300px">
       <br>
