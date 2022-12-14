@@ -15,7 +15,7 @@
 </form>
 
 <p th:text="'Наименование: ' + ${product.getTitle()}"></p>
-<p th:text="'Категория: ' + ${product.getCategory()}"></p>
+<p th:text="'Категория: ' + ${product.getCategory().getName()}"></p>
 <p th:text="'Описание: ' + ${product.getDescription()}"></p>
 <p th:text="'Цена: ' + ${product.getPrice()}"></p>
 <p th:text="'Склад: ' + ${product.getWarehouse()}"></p>
