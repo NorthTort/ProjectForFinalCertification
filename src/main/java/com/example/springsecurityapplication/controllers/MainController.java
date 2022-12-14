@@ -21,7 +21,7 @@ public class MainController {
         this.productServise = productServise;
     }
 
-//    Метод предназначен для отображения товаров без прохождения аунтетификации и валидации
+//    Метод предназначен для отображения товаров без прохождения аутентификации и валидации
     @GetMapping("")
     public String getAllProduct(Model model){
         model.addAttribute("products", productServise.getAllProduct());

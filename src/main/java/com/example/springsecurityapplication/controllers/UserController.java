@@ -99,10 +99,10 @@ public class UserController {
 
 
 
-    @GetMapping("/info/{id}")
-    public String infoProduct(@PathVariable("id") int id, Model model){
+    @GetMapping("/user/info/{id}")
+    public String infoProductUser(@PathVariable("id") int id, Model model){
         model.addAttribute("product", productServise.getProductId(id));
-        return "product/infoProduct";
+        return "/user/infoProduct";
     }
 
     @GetMapping("/cart/delete/{id}")
@@ -137,7 +137,7 @@ public class UserController {
             cartRepository.deleteCartById(product.getId(), id_person);
         }
 
-        return "redirect:/orders";
+        return "redirect:/cart";
     }
 
     @GetMapping("/orders")

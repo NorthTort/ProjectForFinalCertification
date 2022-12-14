@@ -68,7 +68,7 @@
     <div th:each="product : ${products}">
         <img th:src="'/img/' + ${product.imageList[0].getFileName()}" width="300px">
         <br>
-        <a th:href="@{/product/info/{id}(id=${product.getId()})}" th:text="${product.getTitle()}" id="title"></a>
+        <a th:href="@{/user/info/{id}(id=${product.getId()})}" th:text="${product.getTitle()}" id="title"></a>
 
         <div>
             <p th:text="'Цена: ' + ${product.getPrice()}" style="display: inline-block"></p>

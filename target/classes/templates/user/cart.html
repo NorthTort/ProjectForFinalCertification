@@ -20,19 +20,26 @@
       <input type="submit" value="Выйти из личного кабинета">
   </form>
 
-  <br>
 
   <div th:each="product : ${cart_product}">
+  <br>
+  <hr>
       <img th:src="'/img/' + ${product.imageList[0].getFileName()}" width="300px">
       <br>
       <a th:href="@{/product/info/{id}(id=${product.getId()})}" th:text="${product.getTitle()}"></a>
       <div>
           <p th:text="'Цена: ' + ${product.getPrice()}" style="display: inline-block"></p>
-          <a th:href="@{/cart/delete/{id}(id=${product.getId()})}" style="display: inline-block">Удалить</a>
+
+          <form method="get" th:action="@{/cart/delete/{id}(id=${product.getId()})}"  style="display: inline-block">
+              <input type="submit" value="Удалить">
+          </form>
       </div>
   </div>
     <hr>
     <h3 th:text="'Итоговая цена: ' + ${price}"></h3>
-    <a href="/order/create">Оформить заказ</a>
+  <form method="get" th:action="@{/order/create}"  style="display: inline-block">
+      <input type="submit" value="Оформить заказ">
+  </form>
+
 </body>
 </html>
